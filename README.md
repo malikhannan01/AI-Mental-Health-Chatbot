@@ -36,7 +36,7 @@ This project is an AI based mental health counseling chatbot built using two dee
 
 | Metric | Score |
 |--------|-------|
-| Emotion Detection Accuracy | Due to fine grained 28 emotion classes, accuracy is limited |
+| Emotion Detection Accuracy | ~45% (28-class fine-grained classification, inherently challenging task) |
 | Training Dataset | Balanced GoEmotions with class weights |
 | Response Style | Empathetic, structured, multi-step advice |
 
