@@ -61,26 +61,6 @@ This project is an AI-based mental health counseling chatbot built using two dee
 | `mental_health_chatbot.ipynb` | Model training code for BiLSTM and BlenderBot fine-tuning |
 | `chatbot_pipeline.ipynb` | Complete pipeline with loading and inference code |
 
----
-
-## Limitations
-
-- Emotion detection accuracy is 45% across 28 fine-grained emotions
-- Some similar emotions may be confused (sadness vs disappointment)
-- BlenderBot responses may occasionally be generic
-- Requires both models loaded, approximately 2GB RAM
-- Not a substitute for professional mental health care
-- Limited to English language only
-
-## Future Improvements
-
-- Improve emotion detection with transformer-based models
-- Add conversation history for contextual responses
-- Support multilingual conversations
-- Deploy as web application with user interface
-- Add voice input and output capabilities
-- Integrate crisis detection and hotline referrals
-
   ---
 
 ## How It Works
@@ -105,86 +85,35 @@ Download link: https://drive.google.com/drive/folders/1ndOcz9W2VsxOE2BG2eXdlRoal
 Upload the entire `ai_chat_bot` folder to your own Google Drive. Do not rename the folder or any files inside it.
 
 
-### Step 3: Mount Drive and Run
+### Step 3: Run the Pipeline
 
-```python
-from google.colab import drive
-drive.mount('/content/drive')
+1. Download the `chatbot_pipeline.ipynb` notebook from this repository.  
+2. After Uploading the `ai_chat_bot` folder to your Google Drive.  
+3. Open the `chatbot_pipeline.ipynb` notebook in Google Colab.  
+4. Run First cell to Mount your Google Drive.  
+5. Than Run all cells in the notebook.  
+6. The chatbot will start working automatically.  
+7. If needed, update file paths to match your Google Drive folder location.
 
-import tensorflow as tf
-import torch
-import pickle
-import numpy as np
-from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
+   ---
 
-# Load BiLSTM
-with open('/content/drive/MyDrive/ai_chat_bot/BiLSTM/goemotion_tokenizer.pkl', 'rb') as f:
-    bilstm_tokenizer = pickle.load(f)
+## Limitations
 
-with open('/content/drive/MyDrive/ai_chat_bot/BiLSTM/goemotion_label_mapping.pkl', 'rb') as f:
-    emotion_labels_map = pickle.load(f)
+- Emotion detection accuracy is 45% across 28 fine-grained emotions
+- Some similar emotions may be confused (sadness vs disappointment)
+- BlenderBot responses may occasionally be generic
+- Requires both models loaded, approximately 2GB RAM
+- Not a substitute for professional mental health care
+- Limited to English language only
 
-with open('/content/drive/MyDrive/ai_chat_bot/BiLSTM/goemotion_max_length.pkl', 'rb') as f:
-    MAX_LENGTH = pickle.load(f)
+## Future Improvements
 
-bilstm_model = tf.keras.models.load_model('/content/drive/MyDrive/ai_chat_bot/BiLSTM/bilstm_goemotion_balanced.h5')
-
-# Load BlenderBot
-tokenizer = BlenderbotTokenizer.from_pretrained('/content/drive/MyDrive/ai_chat_bot/MentalHealth')
-model = BlenderbotForConditionalGeneration.from_pretrained('/content/drive/MyDrive/ai_chat_bot/MentalHealth')
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = model.to(device)
-model.eval()
-
-# Detection function
-def detect_emotion(text):
-    tokens = bilstm_tokenizer.texts_to_sequences([text])
-    padded = tf.keras.preprocessing.sequence.pad_sequences(tokens, maxlen=MAX_LENGTH, padding='post')
-    predictions = bilstm_model.predict(padded, verbose=0)[0]
-    top_idx = np.argmax(predictions)
-    return emotion_labels_map[top_idx]
-
-# Response function
-def generate_response(user_input, emotion):
-    prefixed_input = f"I feel {emotion}. {user_input}"
-    inputs = tokenizer(prefixed_input, return_tensors='pt', truncation=True, max_length=128).to(device)
-
-    with torch.no_grad():
-        outputs = model.generate(
-            **inputs,
-            max_new_tokens=150,
-            min_new_tokens=20,
-            num_beams=4,
-            no_repeat_ngram_size=3,
-            early_stopping=True
-        )
-
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
-
-# Chat function
-def chat():
-    print("MENTAL HEALTH CHATBOT")
-    print("Type 'quit' to exit")
-
-    while True:
-        user_input = input("You: ")
-
-        if user_input.lower() == 'quit':
-            print("Bot: Take care! Goodbye!")
-            break
-
-        if not user_input.strip():
-            continue
-
-        emotion = detect_emotion(user_input)
-        response = generate_response(user_input, emotion)
-
-        print(f"Emotion: {emotion}")
-        print(f"Bot: {response}")
-        print("-" * 40)
-
-chat()
+- Improve emotion detection with transformer-based models
+- Add conversation history for contextual responses
+- Support multilingual conversations
+- Deploy as web application with user interface
+- Add voice input and output capabilities
+- Integrate crisis detection and hotline referrals
 
 
 
