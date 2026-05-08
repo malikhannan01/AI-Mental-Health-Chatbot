@@ -1,6 +1,6 @@
 # Mental Health Counseling Chatbot
 
-## AI nPowered Emotion Detection and Therapeutic Response System
+## AI Powered Emotion Detection and Therapeutic Response System
 
 ---
 
@@ -10,7 +10,7 @@ A dual model AI chatbot that detects user emotions using BiLSTM and generates em
 
 ## Overview
 
-This project is an AI-based mental health counseling chatbot built using two deep learning models working together. The first model is a BiLSTM trained on the GoEmotions dataset to detect 28 different emotions from user text input. The second model is a fine-tuned BlenderBot-400M that generates empathetic and therapeutic responses based on the detected emotion. The complete pipeline provides an end-to-end conversational AI system for mental health support.
+This project is an AI based mental health counseling chatbot built using two deep learning models working together. The first model is a BiLSTM trained on the GoEmotions dataset to detect 28 different emotions from user text input. The second model is a fine-tuned BlenderBot-400M that generates empathetic and therapeutic responses based on the detected emotion. The complete pipeline provides an end to end conversational AI system for mental health support.
 
 ---
 
@@ -36,7 +36,7 @@ This project is an AI-based mental health counseling chatbot built using two dee
 
 | Metric | Score |
 |--------|-------|
-| Emotion Detection Accuracy | 45.46% across 28 classes |
+| Emotion Detection Accuracy | Due to fine grained 28 emotion classes, accuracy is limited |
 | Training Dataset | Balanced GoEmotions with class weights |
 | Response Style | Empathetic, structured, multi-step advice |
 
@@ -46,7 +46,7 @@ This project is an AI-based mental health counseling chatbot built using two dee
 
 - Detects 28 emotions including sadness, anxiety, anger, joy, grief, nervousness
 - Generates empathetic therapeutic responses using fine-tuned BlenderBot
-- End-to-end pipeline from emotion detection to response generation
+- End to end pipeline from emotion detection to response generation
 - Interactive chat interface for real-time conversation
 - Trained on balanced GoEmotions dataset with class weighting
 - BlenderBot fine-tuned on mental health counseling conversations
@@ -91,7 +91,7 @@ Upload the entire `ai_chat_bot` folder to your own Google Drive. Do not rename t
 2. After Uploading the `ai_chat_bot` folder to your Google Drive.  
 3. Open the `chatbot_pipeline.ipynb` notebook in Google Colab.  
 4. Run First cell to Mount your Google Drive.  
-5. Than Run all cells in the notebook.  
+5. Then Run all cells in the notebook.  
 6. The chatbot will start working automatically.  
 7. If needed, update file paths to match your Google Drive folder location.
 
@@ -99,10 +99,10 @@ Upload the entire `ai_chat_bot` folder to your own Google Drive. Do not rename t
 
 ## Limitations
 
-- Emotion detection accuracy is 45% across 28 fine-grained emotions
+- Emotion detection accuracy is 45% across 28 fine grained emotions
 - Some similar emotions may be confused (sadness vs disappointment)
 - BlenderBot responses may occasionally be generic
-- Requires both models loaded, approximately 2GB RAM
+- Requires both models loaded, approximately 2GB+ GPU/CPU memory for inference.
 - Not a substitute for professional mental health care
 - Limited to English language only
 
